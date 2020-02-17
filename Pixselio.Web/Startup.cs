@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pixselio.Data;
 using Pixselio.Data.Context;
+using Pixselio.Web.Mapper;
 using Pixselio.Web.Settings;
 
 namespace Pixselio.Web
@@ -73,7 +75,17 @@ namespace Pixselio.Web
                 options.SlidingExpiration = true;
             });
             #endregion
+            #region AutoMapper
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            #endregion
             // Add our Config object so it can be injected
             services.Configure<SettingsMapModel>(Configuration.GetSection("SettingsMapModel"));
 
