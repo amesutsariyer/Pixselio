@@ -7,14 +7,11 @@ namespace Pixselio.Data
 {
    public class Photo : BaseEntity
     {
-        public Photo()
-        {
-            Tags = new HashSet<Tag>();
-        }
+  
         [Required]
         public string Name { get; set; }
         public string Extension { get; set; }
         public int Size { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public List<PhotosTag> PhotosTag { get; set; }
     }
 }

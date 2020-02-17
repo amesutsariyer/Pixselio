@@ -6,11 +6,7 @@ namespace Pixselio.Data
 {
     public class Tag : BaseEntity
     {
-        public Tag()
-        {
-            Photos = new HashSet<Photo>();
-        }
         public string Name { get; set; }
-        public virtual ICollection<Photo> Photos { get; set; }
+        public List<PhotosTag> PhotosTag { get; set; }
     }
 }

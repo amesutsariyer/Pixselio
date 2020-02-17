@@ -15,20 +15,14 @@ namespace Pixselio.Web.Controllers
 {
     public class AdminController : BaseController
     {
-        private readonly PixselioDbContext _context;
+        private readonly IdentityDbContext _context;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public AdminController(PixselioDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, IOptions<SettingsMapModel> config) : base(config)
+        public AdminController(IdentityDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, IOptions<SettingsMapModel> config) : base(config)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
-        }
-
-        // [Authorize]
-        public IActionResult Index()
-        {
-            return View();
         }
 
         public IActionResult Login()
@@ -89,6 +83,45 @@ namespace Pixselio.Web.Controllers
                 IsCreateSuccess = false,
                 ModelBinding = ModelState
             });
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> SignIn(LoginRequestModel obj, string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(obj.UserName.Trim());
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, 
+                // set lockoutOnFailure: true
+                try
+                {
+                    var result = await _signInManager.PasswordSignInAsync(user, obj.Password, true, true);
+                    if (result.Succeeded)
+                    {
+                        return LocalRedirect("/Home/Index");
+                    }
+                    else
+                    {
+                        return RedirectToAction("LoginFailed", "Admin");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("LoginFailed", "Admin");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("LoginFailed", "Admin");
+        }
+        //[Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return LocalRedirect("/Home/Index");
         }
     }
 }

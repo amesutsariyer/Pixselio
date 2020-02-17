@@ -2,7 +2,21 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model Pixselio.Web.Models.Request.LoginRequestModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Pixselio.Data.User> SignInManager
+@inject UserManager<Pixselio.Data.User> userManager
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome To <b>PxIO</b></h1>
+        @User.Identity.Name     
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <p> If you want to see your Photo Library first you need to <a href="/Admin/Login">Login</a> or  <a href="/Admin/Register">Register</a></p>
+        }
+        else
+        {
+            <p>Welcome to your favorite website  <br /> <a href="/User/Index">My Photos</a>  </p>
+        }
+    </div>
+

@@ -29,12 +29,13 @@ namespace Pixselio.Web
         {
             #region DbContext
 
-            services.AddDbContext<PixselioDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"]), ServiceLifetime.Transient);
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PixselioDbContext>();
+            services.AddDbContext<IdentityDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"]), ServiceLifetime.Transient);
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityDbContext>();
 
             #endregion
 
             #region Identity Options
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -97,7 +98,7 @@ namespace Pixselio.Web
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

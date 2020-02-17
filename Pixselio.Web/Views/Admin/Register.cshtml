@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model Pixselio.Web.Models.Request.RegisterRequestModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Pixselio.Data.User> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<Pixselio.Data.User> userManager
+    <div class="container">
+        <div class="text-center">
+            <div class="row">
+                <h3 class="font-weight-bold ">
+                    Register
+                </h3>
+
+            </div>
+            <div class="row">
+                @using (Html.BeginForm("Register", "Admin", FormMethod.Post))
+                {
+                    <div class="row mt-5">
+                        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 mb-1">
+                            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control textbox-border-radius txt-input-width validate-required", @maxlength = "50", @placeholder = "User Name" })
+
+                        </div>
+                        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 mb-1">
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control textbox-border-radius txt-input-width validate-required validate-email", @maxlength = "50", @placeholder = "E-Mail" })
+
+                        </div>
+                        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 mb-1">
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control textbox-border-radius txt-input-width validate-required", @maxlength = "50", @placeholder = "Password" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  mt-2">
+                            <button type="submit" class="login-button button-drd float-left button-drd-width submit-form-button">Save</button>
+                        </div>
+                        <div class="col-lg-4 col-md-0"></div>
+                    </div>
+                  
+
+                    <div class="row mt-5">
+                        <div class="col-md-9 col-sm-12  mb-2">
+
+                            @if (Model.UserName != null)
+                            {
+                                @if (Model.IsCreateSuccess)
+                                {
+                                    <text>   <b>  @Model.UserName</b>  successfully created.<a class="font-weight-bold" href="/Admin/Login">Login</a></text>
+                                }
+                                else
+                                {
+                                    <text>    <b>  @Model.UserName</b> could not be registered.Try the steps below
+                                    <ul>
+                                        @foreach (var item in Model.ModelBinding.Select(x => x.Value.Errors)
+.Where(y => y.Count > 0)
+.ToList())
+                                        {
+                                            <li>
+                                                @item[0].ErrorMessage
+                                            </li>
+                                        }
+                                    </ul>
+                                    </text>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+ 
+
+
