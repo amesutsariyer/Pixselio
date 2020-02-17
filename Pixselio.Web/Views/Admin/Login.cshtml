@@ -25,15 +25,15 @@
                     {
                         <div class="row">
                             <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 mb-1">
-                                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control textbox-border-radius validate-required validate-email", @maxlength = "50", @type = "text", @placeholder = "User Name" })
+                                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", @maxlength = "50", @type = "text", @placeholder = "User Name" ,@required="required" })
                             </div>
                             <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 mb-4 mt-2">
-                                @Html.PasswordFor(x => x.Password, new { @class = "form-control textbox-border-radius validate-required", @maxlength = "50", @type = "password", @placeholder = "Password" })
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control", @maxlength = "50", @type = "password", @placeholder = "Password" ,@required="required" })
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  mb-1">
-                                <button type="submit" class="login-button button-drd float-left button-drd-width submit-form-button">Entry</button>
+                                <button type="submit" class="form-control">Entry</button>
                             </div>
                             <div class="col-lg-4 col-md-0"></div>
                         </div>
@@ -57,16 +57,16 @@
             {
                 <div class="col-md-6 mt-5 text-center">
                     <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <h2 class="text-white"> Hoşgeldin @User.Identity.Name</h2>
+                        <div class="col-md-6 col-sm-12">
+                            <h2 class="font-weight-bold font-italic"> @User.Identity.Name</h2>
                         </div>
                     </div>
                     <div class="row align-bottom">
                         <div class="col-md-12 col-sm-12">
-                            <form class="form-inline just-content-center" asp-controller="Home" asp-action="Logout"
+                            <form class="form-inline just-content-center" asp-controller="Admin" asp-action="Logout"
                                   asp-route-returnUrl="@Url.Page("/")"
                                   method="post">
-                                <button type="submit" class="button-drd button-drd-width exit-button">Çıkış Yap</button>
+                                <button type="submit" class="form-control">You are already Logged in.Click to Logout.</button>
                             </form>
                         </div>
 

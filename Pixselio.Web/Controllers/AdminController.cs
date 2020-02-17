@@ -117,7 +117,7 @@ namespace Pixselio.Web.Controllers
             // If we got this far, something failed, redisplay form
             return RedirectToAction("LoginFailed", "Admin");
         }
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
