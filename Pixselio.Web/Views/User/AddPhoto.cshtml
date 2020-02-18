@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "Add Photo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Pixselio.Web.Models.PhotoModel
+<style>
+
+    .label-info {
+        background-color: #ff6f26;
+    }
+
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+</style>
+<link href="~/css/bootstrap-tagsinput.css" rel="stylesheet" />
+<div class="text-center">
+    <h1 class="display-4">Add <b>Photo</b></h1>
+    @using (Html.BeginForm("AddPhoto", "User", FormMethod.Post, new { @id = "form-add-photo" }))
+    {
+        <div class="row mt-5">
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-1">
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @maxlength = "50", @placeholder = "Title", @required = "required" })
+            </div>
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-1">
+                @Html.TextBoxFor(x => x.Tags, new { @class = "form-control", @maxlength = "50", @placeholder = "Tags", @required = "required", @data_role = "tagsinput" })
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-1">
+                @Html.TextBoxFor(x => x.Size, new { @class = "form-control", @maxlength = "50", @placeholder = "Tags", @required = "required", @type = "file" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  mt-2">
+                <button type="submit" class="form-control">Save</button>
+            </div>
+            <div class="col-lg-4 col-md-0"></div>
+        </div>
+    }
+
+</div>
+@section Scripts{
+    <script src="~/js/bootstrap-tagsinput.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#form-add-photo").bind("keypress", function (e) {
+                if (e.keyCode == 13) {
+                    return false;
+                }
+            });
+        });
+    </script>
+
+}
+

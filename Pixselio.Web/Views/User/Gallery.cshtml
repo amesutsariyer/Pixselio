@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Gallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="text-center">
+        <p class="text-white">You don't have any photos yet :( <a class="text-white" href="@Url.Action("AddPhoto","User")">Clik to Add</a>  </p>
+</div>
+
+<link href="~/css/gallerycss.css" rel="stylesheet" />
+<div class="gallery">
+    <ul id="lightgallery" class="list-unstyled row">
+        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/1-375.jpg 375, img/1-480.jpg 480, img/1.jpg 800" data-src="../images/audi-1.jpg" data-sub-html="<h4>Fading Light</h4><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+            <a href="">
+                <img class="img-responsive" src="~/images/audi-1.jpg" alt="Thumb-1">
+            </a>
+            <a class="text-white border-0" href="/Detail">Detail</a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/2-375.jpg 375, img/2-480.jpg 480, img/2.jpg 800" data-src="../images/audi-2.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+            <a href="">
+                <img class="img-responsive" src="~/images/audi-2.jpg" alt="Thumb-2">
+            </a>
+            <a class="text-white border-0" href="/Detail">Detail</a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/13-375.jpg 375, img/13-480.jpg 480, img/13.jpg 800" data-src="../images/audi-2.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+            <a href="">
+                <img class="img-responsive" src="~/images/audi-2.jpg" alt="Thumb-3">
+            </a>
+            <a class="text-white border-0" href="/Detail">Detail</a>
+        </li>
+        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/4-375.jpg 375, img/4-480.jpg 480, img/4.jpg 800" data-src="../images/audi-1.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+            <a href="">
+                <img class="img-responsive" src="~/images/audi-1.jpg" alt="Thumb-4">
+            </a>
+            <a class="text-white border-0" href="/Detail">Detail</a>
+        </li>
+    </ul>
+    <div class="text-center">
+       <p> <a class="text-white" href="@Url.Action("AddPhoto","User")">Add Photo</a>  </p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+
+@section Scripts{
+    <script src="~/js/gallery-js/lightgallery.js"></script>
+    <script src="~/js/gallery-js/lg-pager.js"></script>
+    <script src="~/js/gallery-js/lg-autoplay.js"></script>
+    <script src="~/js/gallery-js/lg-fullscreen.js"></script>
+    <script src="~/js/gallery-js/lg-zoom.js"></script>
+    <script src="~/js/gallery-js/lg-hash.js"></script>
+    <script src="~/js/gallery-js/lg-share.js"></script>
+  
+    <script>lightGallery(document.getElementById('lightgallery'));</script>
+}

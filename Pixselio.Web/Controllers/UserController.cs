@@ -12,6 +12,7 @@ using Pixselio.Data;
 using Pixselio.Data.Context;
 using Pixselio.Web.Models.Request;
 using Pixselio.Web.Settings;
+using Pixselio.Web.Models;
 
 namespace Pixselio.Web.Controllers
 {
@@ -28,7 +29,7 @@ namespace Pixselio.Web.Controllers
         }
         [Authorize]
         [HttpGet]
-        public IActionResult GetPhotos()
+        public IActionResult Gallery()
         {
             return View();
         }
@@ -39,10 +40,18 @@ namespace Pixselio.Web.Controllers
             return View();
         }
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public IActionResult AddPhoto()
         {
             return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddPhoto(PhotoModel model)
+        {
+            model.CreatedBy = User.Identity.Name;
+            return View("Gallery");
         }
         [Authorize]
       
