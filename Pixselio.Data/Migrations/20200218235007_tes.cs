@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pixselio.Data.Migrations
 {
-    public partial class fm : Migration
+    public partial class tes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,9 +55,11 @@ namespace Pixselio.Data.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: false),
+                    Path = table.Column<string>(nullable: true),
                     Extension = table.Column<string>(nullable: true),
                     Size = table.Column<int>(nullable: false)
                 },
@@ -75,9 +77,8 @@ namespace Pixselio.Data.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(nullable: true),
-                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    TagId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

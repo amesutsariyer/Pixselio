@@ -7,8 +7,8 @@
 
 @model Pixselio.Web.Models.Request.RegisterRequestModel
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<Pixselio.Data.User> SignInManager
-@inject Microsoft.AspNetCore.Identity.UserManager<Pixselio.Data.User> userManager
+@inject SignInManager<Pixselio.Entity.User> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<Pixselio.Entity.User> userManager
     <div class="container">
         <div class="text-center">
             @if (SignInManager.IsSignedIn(User))

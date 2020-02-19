@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Pixselio.Data.Context;
+using Pixselio.Data;
 
 namespace Pixselio.Data.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20200217214305_fm2")]
-    partial class fm2
+    [Migration("20200218235007_tes")]
+    partial class tes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,7 +152,7 @@ namespace Pixselio.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Pixselio.Data.Photo", b =>
+            modelBuilder.Entity("Pixselio.Entity.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,13 +175,20 @@ namespace Pixselio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Size")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -189,7 +196,7 @@ namespace Pixselio.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("Pixselio.Data.PhotosTag", b =>
+            modelBuilder.Entity("Pixselio.Entity.PhotosTag", b =>
                 {
                     b.Property<int>("PhotoId")
                         .HasColumnType("int");
@@ -204,7 +211,7 @@ namespace Pixselio.Data.Migrations
                     b.ToTable("PhotosTags");
                 });
 
-            modelBuilder.Entity("Pixselio.Data.Tag", b =>
+            modelBuilder.Entity("Pixselio.Entity.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -226,7 +233,7 @@ namespace Pixselio.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -234,7 +241,7 @@ namespace Pixselio.Data.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Pixselio.Data.User", b =>
+            modelBuilder.Entity("Pixselio.Entity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -310,7 +317,7 @@ namespace Pixselio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Pixselio.Data.User", null)
+                    b.HasOne("Pixselio.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -319,7 +326,7 @@ namespace Pixselio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Pixselio.Data.User", null)
+                    b.HasOne("Pixselio.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -334,7 +341,7 @@ namespace Pixselio.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pixselio.Data.User", null)
+                    b.HasOne("Pixselio.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -343,22 +350,22 @@ namespace Pixselio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Pixselio.Data.User", null)
+                    b.HasOne("Pixselio.Entity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Pixselio.Data.PhotosTag", b =>
+            modelBuilder.Entity("Pixselio.Entity.PhotosTag", b =>
                 {
-                    b.HasOne("Pixselio.Data.Photo", "Photo")
+                    b.HasOne("Pixselio.Entity.Photo", "Photo")
                         .WithMany("PhotosTag")
                         .HasForeignKey("PhotoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pixselio.Data.Tag", "Tag")
+                    b.HasOne("Pixselio.Entity.Tag", "Tag")
                         .WithMany("PhotosTag")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)

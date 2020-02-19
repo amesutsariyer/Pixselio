@@ -22,7 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pixselio.Business\Pixselio.Business.csproj" />
     <ProjectReference Include="..\Pixselio.Data\Pixselio.Data.csproj" />
+    <ProjectReference Include="..\Pixselio.Dto\Pixselio.Dto.csproj" />
   </ItemGroup>
 
 

@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Pixselio.Business.Managers;
+using Pixselio.Business.Services;
 using Pixselio.Data;
-using Pixselio.Data.Context;
+using Pixselio.Dto;
+using Pixselio.Entity;
 using Pixselio.Web.Models.Request;
 using Pixselio.Web.Settings;
 
@@ -15,13 +18,9 @@ namespace Pixselio.Web.Controllers
 {
     public class AdminController : BaseController
     {
-        private readonly IdentityDbContext _context;
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        public AdminController(IdentityDbContext context, SignInManager<User> signInManager, UserManager<User> userManager, IOptions<SettingsMapModel> config) : base(config)
+        private readonly IUserService _userManager;
+        public AdminController(IUserService userManager, IOptions<SettingsMapModel> config) : base(config)
         {
-            _context = context;
-            _signInManager = signInManager;
             _userManager = userManager;
         }
 
@@ -48,20 +47,14 @@ namespace Pixselio.Web.Controllers
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User()
-                {
-                    Email = model.Email,
-                    UserName = model.UserName
-                };
                 try
                 {
-                    var result = await _userManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
+                    var result = await _userManager.Register(new RegisterDto() { Email = model.Email, Password = model.Password, UserName = model.UserName });
+                    if (result.IsCreateSuccess)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
                         return View("Register", new RegisterRequestModel()
                         {
-                            UserName = user.UserName,
+                            UserName = result.UserName,
                             IsCreateSuccess = true
                         });
                     }
@@ -92,14 +85,14 @@ namespace Pixselio.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(obj.UserName.Trim());
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, 
                 // set lockoutOnFailure: true
                 try
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user, obj.Password, true, true);
-                    if (result.Succeeded)
+                    var result = await _userManager.SignIn(new SignInDto() { Password = obj.Password, UserName = obj.UserName });
+                    if (result)
                     {
                         return LocalRedirect("/Home/Index");
                     }
@@ -118,9 +111,10 @@ namespace Pixselio.Web.Controllers
             return RedirectToAction("LoginFailed", "Admin");
         }
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await _signInManager.SignOutAsync();
+            // await _signInManager.SignOutAsync();
+            _userManager.SignOut();
             return LocalRedirect("/Home/Index");
         }
     }

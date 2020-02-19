@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Pixselio.Entity;
 
-
-namespace Pixselio.Data.Context
+namespace Pixselio.Data
 {
     public class IdentityDbContext : IdentityDbContext<User>
     {

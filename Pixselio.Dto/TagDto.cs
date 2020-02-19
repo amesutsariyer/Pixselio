@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pixselio.Data
+namespace Pixselio.Dto
 {
-    public class Tag : BaseEntity
+    public class TagDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public List<PhotosTag> PhotosTag { get; set; }
     }
 }

@@ -3,44 +3,36 @@
     ViewData["Title"] = "Gallery";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="text-center">
-    <p class="text-white">You don't have any photos yet :( <a class="text-white" href="@Url.Action("AddPhoto","User")">Clik to Add</a>  </p>
-</div>
-
+@model List<Pixselio.Web.Models.PhotoModel>
 <link href="~/css/gallerycss.css" rel="stylesheet" />
-<div class="gallery">
-    <ul id="lightgallery" class="list-unstyled row">
-        <li style="margin:0px !important " class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/1-375.jpg 375, img/1-480.jpg 480, img/1.jpg 800" data-src="../images/audi-1.jpg" data-sub-html="<h4>Fading Light</h4><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-            <a href="">
-                <img class="img-responsive" src="~/images/audi-1.jpg" alt="Thumb-1">
-            </a>
-            <a class="text-white border-0 detail-href" href="/Detail/3">Detail</a>
-        </li>
 
-        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/2-375.jpg 375, img/2-480.jpg 480, img/2.jpg 800" data-src="../images/audi-2.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-            <a href="">
-                <img class="img-responsive" src="~/images/audi-2.jpg" alt="Thumb-2">
-            </a>
-            <a class="text-white border-0 detail-href" href="/Detail/3">Detail</a>
-        </li>
-        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/13-375.jpg 375, img/13-480.jpg 480, img/13.jpg 800" data-src="../images/audi-2.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-            <a href="">
-                <img class="img-responsive" src="~/images/audi-2.jpg" alt="Thumb-3">
-            </a>
-            <a class="text-white border-0 detail-href" href="/Detail/2">Detail</a>
-        </li>
-        <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/4-375.jpg 375, img/4-480.jpg 480, img/4.jpg 800" data-src="../images/audi-1.jpg" data-sub-html="<h4>Bowness Bay</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned but I'm extremely happy I was passing the right place at the right time....</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-            <a href="">
-                <img class="img-responsive" src="~/images/audi-1.jpg" alt="Thumb-4">
-            </a>
-            <a class="text-white border-0 detail-href" href="/Detail/1">Detail</a>
-        </li>
-    </ul>
-
+@if (Model.Count == 0)
+{
     <div class="text-center">
-        <p> <a class="text-white" href="@Url.Action("AddPhoto","User")">Add Photo</a>  </p>
+        <p class="text-white">You don't have any photos yet :( <a class="text-white" href="@Url.Action("AddPhoto","User")">Clik to Add</a>  </p>
     </div>
-</div>
+}
+else
+{
+    <div class="gallery">
+        <ul id="lightgallery" class="list-unstyled row">
+            @foreach (var photo in @Model)
+            {
+                <li style="margin:0px !important " class="col-xs-6 col-sm-4 col-md-3" data-responsive="img/1-375.jpg 375, img/1-480.jpg 480, img/1.jpg 800" data-src="../images/@(photo.Extension+photo.Name)" data-sub-html="<h4>PhotoBoom</h4><p>@photo.Title</p>" data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
+                    <a href="">
+                        <img class="img-responsive" src="~/images/@(photo.Extension+photo.Name)" alt="Thumb-1">
+                    </a>
+                    <a class="text-white border-0 detail-href" href="/Detail/@photo.Id">Detail</a>
+                </li>
+            }
+        </ul>
+        <div class="text-center">
+            <p> <a class="text-white" href="@Url.Action("AddPhoto","User")">Add Photo</a>  </p>
+        </div>
+    </div>
+}
+
+
 
 <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
 

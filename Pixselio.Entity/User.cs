@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Pixselio.Data
+namespace Pixselio.Entity
 {
     public class User : IdentityUser
     {
