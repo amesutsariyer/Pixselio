@@ -13,30 +13,39 @@ namespace Pixselio.Business.Managers
     {
         private readonly IUnitofWork _unitofWork;
         private readonly IGenericRepository<Photo> _photoRep;
+        private readonly IGenericRepository<Tag> _tagRep;
+        private readonly IGenericRepository<PhotosTag> _photoTagRep;
         public PhotoManager(IUnitofWork unitofWork)
         {
             _unitofWork = unitofWork;
             _photoRep = _unitofWork.GetRepository<Photo>();
+            _tagRep = _unitofWork.GetRepository<Tag>();
+            _photoTagRep = _unitofWork.GetRepository<PhotosTag>();
         }
 
 
         public string Add(PhotoDto dto)
         {
-            var photo = new Photo
+            var photoEnt = new Photo
             {
                 Name = dto.Name,
                 Title = dto.Title,
-                Extension =dto.Extension,
+                Extension = dto.Extension,
                 Path = dto.Path,
-                Size=dto.Size,
-                CreatedBy =dto.CreatedBy
+                Size = dto.Size,
+                CreatedBy = dto.CreatedBy
             };
 
-            _photoRep.Add(photo);
+            foreach (var tag in dto.Tags)
+            {
+                var tagEnt = new Tag() { Id = tag.Id, Name = tag.Name };
+                var ptEnt = new PhotosTag() { Photo = photoEnt, Tag = tagEnt };
+                _photoTagRep.Add(ptEnt);
+            }
 
             if (_unitofWork.SaveChanges() > 0)
-                return "Created Success";
-            return "Process Failed";
+                return "Success";
+            return "Failed";
         }
 
         public string Delete(int id)
@@ -55,6 +64,7 @@ namespace Pixselio.Business.Managers
         public PhotoDto GetPhotoById(int id)
         {
             var ent = _photoRep.GetById(id);
+            var pt = _photoTagRep.GetAll(x => x.PhotoId == id).ToList();
             return new PhotoDto()
             {
                 Id = ent.Id,

@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "Add Photo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Pixselio.Web.Models.PhotoModel
+
+
+
+
+<div class="text-center">
+    <h1 class="display-4"><b>@Model.Title</b></h1>
+    <h3 class="display-4"><b>@Model.Tags</b></h3>
+    @using (Html.BeginForm("AddPhoto", "User", FormMethod.Post, new { @id = "form-add-photo", enctype = "multipart/form-data" }))
+    {
+        <div class="row mt-5">
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-1">
+            </div>
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 mb-1">
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  mt-2">
+                <button type="button" id="btn-removePhoto" class="form-control">Delete</button>
+            </div>
+            <div class="col-lg-4 col-md-0"></div>
+        </div>
+    }
+
+</div>
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#btn-removePhoto").on("click", function (e) {
+                $.ajax({
+                    url: "/User/DeletePhoto",
+                    data: {
+                        id: @Model.Id
+                    },
+                    success: function (result) {
+                        $("#weather-temp").html("<strong>" + result + "</strong> degrees");
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+

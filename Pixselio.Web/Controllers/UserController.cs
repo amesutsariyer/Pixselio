@@ -32,23 +32,21 @@ namespace Pixselio.Web.Controllers
         [HttpGet]
         public IActionResult Gallery()
         {
-           var dto  = _photoManager.GetPhotoByUserId(User.Identity.Name);
-            var model = dto.Select(x => new PhotoModel()
-            {
-                Id = x.Id,
-                Extension = x.Extension,
-                Name = x.Name,
-                Title =x.Title
-                
-            }).ToList();
-            return View(model);
+            return View(GetAllGallery());
         }
+
         [Authorize]
         [HttpGet]
-        public IActionResult GetPhotoById(int photoId)
+        public IActionResult Detail(int id)
         {
-            _photoManager.GetPhotoById(photoId);
-            return View();
+            var photo = _photoManager.GetPhotoById(id);
+            return View(new PhotoModel()
+            {
+                Id = photo.Id,
+                Extension = photo.Extension,
+                Name = photo.Name,
+                Title = photo.Title
+            });
         }
         [Authorize]
         [HttpGet]
@@ -107,7 +105,7 @@ namespace Pixselio.Web.Controllers
                 throw new System.Exception("Please Choose File.");
             }
 
-            return View("Gallery");
+            return View("Gallery", GetAllGallery());
         }
         [Authorize]
         [HttpPost]
@@ -116,6 +114,19 @@ namespace Pixselio.Web.Controllers
             var result = _photoManager.Delete(photoId);
             return View();
         }
+        #region PRIVATE
+        private List<PhotoModel> GetAllGallery()
+        {
+            var dto = _photoManager.GetPhotoByUserId(User.Identity.Name);
+            return dto.Select(x => new PhotoModel()
+            {
+                Id = x.Id,
+                Extension = x.Extension,
+                Name = x.Name,
+                Title = x.Title
 
+            }).ToList();
+        }
+        #endregion
     }
 }

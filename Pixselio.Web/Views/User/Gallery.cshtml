@@ -41,8 +41,10 @@ else
         $(document).ready(function () {
             $(".detail-href").on("click", function (e) {
                 debugger;
-                var test = e.target.href;
-                location.href = "/admin"
+                var href = e.target.href;
+                var splt = href.split('/')
+                var id = splt[4];
+                location.href = "/User/Detail/" + id;
             });
         });
     </script>
