@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pixselio.Entity;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Principal;
+ 
 
 namespace Pixselio.Data
 {

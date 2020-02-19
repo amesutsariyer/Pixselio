@@ -14,9 +14,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Pixselio.Business.Managers;
 using Pixselio.Business.Services;
+using Pixselio.Core.Mapper;
 using Pixselio.Data;
 using Pixselio.Entity;
-using Pixselio.Web.Mapper;
 using Pixselio.Web.Settings;
 
 namespace Pixselio.Web

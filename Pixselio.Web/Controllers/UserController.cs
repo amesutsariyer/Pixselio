@@ -10,12 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pixselio.Data;
 using Pixselio.Entity;
-using Pixselio.Web.Models.Request;
+using Pixselio.Dto.Models.Request;
 using Pixselio.Web.Settings;
-using Pixselio.Web.Models;
+using Pixselio.Dto.Models;
 using Pixselio.Business.Services;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using AutoMapper;
 
 namespace Pixselio.Web.Controllers
 {
@@ -23,7 +24,8 @@ namespace Pixselio.Web.Controllers
     {
         private readonly IPhotoService _photoManager;
         private IHostingEnvironment _env;
-        public UserController(IPhotoService photoManager, IHostingEnvironment env, IOptions<SettingsMapModel> config) : base(config)
+
+        public UserController(IPhotoService photoManager, IHostingEnvironment env, IMapper mapper, IOptions<SettingsMapModel> config) : base(config, mapper)
         {
             _photoManager = photoManager;
             _env = env;
@@ -45,7 +47,8 @@ namespace Pixselio.Web.Controllers
                 Id = photo.Id,
                 Extension = photo.Extension,
                 Name = photo.Name,
-                Title = photo.Title
+                Title = photo.Title,
+                Tags = String.Join('#', photo.Tags.Select(x => x.Name).ToList())
             });
         }
         [Authorize]
@@ -107,12 +110,15 @@ namespace Pixselio.Web.Controllers
 
             return View("Gallery", GetAllGallery());
         }
+       
         [Authorize]
         [HttpPost]
-        public IActionResult DeletePhoto(int photoId)
+        public JsonResult DeletePhoto([FromBody] PhotoModel model)
         {
-            var result = _photoManager.Delete(photoId);
-            return View();
+            return Json(new
+            {
+                Success = _photoManager.Delete(model.Id)
+            });
         }
         #region PRIVATE
         private List<PhotoModel> GetAllGallery()

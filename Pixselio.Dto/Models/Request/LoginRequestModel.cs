@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pixselio.Web.Models.Request
+
+namespace Pixselio.Dto.Models.Request
 {
     public class LoginRequestModel
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pixselio.Web.Extensions
+namespace Pixselio.Dto.Extensions
 {
     public static class AutoMapperExtensions
     {

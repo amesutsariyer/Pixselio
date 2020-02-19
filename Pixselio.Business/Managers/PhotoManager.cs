@@ -1,11 +1,14 @@
-﻿using Pixselio.Business.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using Pixselio.Business.Services;
 using Pixselio.Data;
 using Pixselio.Dto;
 using Pixselio.Entity;
+using Pixselio.Core.Mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 
 namespace Pixselio.Business.Managers
 {
@@ -15,12 +18,14 @@ namespace Pixselio.Business.Managers
         private readonly IGenericRepository<Photo> _photoRep;
         private readonly IGenericRepository<Tag> _tagRep;
         private readonly IGenericRepository<PhotosTag> _photoTagRep;
-        public PhotoManager(IUnitofWork unitofWork)
+        IMapper _mapper;
+        public PhotoManager(IUnitofWork unitofWork, IMapper mapper)
         {
             _unitofWork = unitofWork;
             _photoRep = _unitofWork.GetRepository<Photo>();
             _tagRep = _unitofWork.GetRepository<Tag>();
             _photoTagRep = _unitofWork.GetRepository<PhotosTag>();
+            _mapper = mapper;
         }
 
 
@@ -48,37 +53,40 @@ namespace Pixselio.Business.Managers
             return "Failed";
         }
 
-        public string Delete(int id)
+        public bool Delete(int id)
         {
             var result = _photoRep.GetById(id);
 
             if (result == null)
-                return "No Record";
-
+                return false;
             _photoRep.Delete(result);
             if (_unitofWork.SaveChanges() > 0)
-                return "Removed Success";
-            return "Failed removed process";
+                return true;
+            return  false;
         }
 
         public PhotoDto GetPhotoById(int id)
         {
-            var ent = _photoRep.GetById(id);
-            var pt = _photoTagRep.GetAll(x => x.PhotoId == id).ToList();
+            var photoEnt = _photoRep.GetById(id);
+            var relatedTags = _photoTagRep.GetAll(x => x.PhotoId == id).Include(d => d.Tag).ToList();
             return new PhotoDto()
             {
-                Id = ent.Id,
-                Extension = ent.Extension,
-                Name = ent.Name,
-                Path = ent.Path,
-                Size = ent.Size,
-                Title = ent.Title
+                Id = photoEnt.Id,
+                Extension = photoEnt.Extension,
+                Name = photoEnt.Name,
+                Path = photoEnt.Path,
+                Size = photoEnt.Size,
+                Title = photoEnt.Title,
+                Tags = relatedTags.Select(x => new TagDto()
+                {
+                    Name = x.Tag.Name
+                }).ToList()
             };
         }
 
         public List<PhotoDto> GetPhotoByUserId(string createdUserName)
         {
-            return _photoRep.GetAll().Where(x => x.CreatedBy == createdUserName).Select(y => new PhotoDto()
+            return _photoRep.GetAll().Where(x => x.CreatedBy == createdUserName && !x.IsDeleted).Select(y => new PhotoDto()
             {
                 Id = y.Id,
                 Extension = y.Extension,

@@ -1,16 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="automapper" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pixselio.Core\Pixselio.Core.csproj" />
     <ProjectReference Include="..\Pixselio.Data\Pixselio.Data.csproj" />
     <ProjectReference Include="..\Pixselio.Dto\Pixselio.Dto.csproj" />
     <ProjectReference Include="..\Pixselio.Entity\Pixselio.Entity.csproj" />

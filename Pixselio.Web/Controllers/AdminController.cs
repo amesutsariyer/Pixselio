@@ -11,15 +11,16 @@ using Pixselio.Business.Services;
 using Pixselio.Data;
 using Pixselio.Dto;
 using Pixselio.Entity;
-using Pixselio.Web.Models.Request;
+using Pixselio.Dto.Models.Request;
 using Pixselio.Web.Settings;
+using AutoMapper;
 
 namespace Pixselio.Web.Controllers
 {
     public class AdminController : BaseController
     {
         private readonly IUserService _userManager;
-        public AdminController(IUserService userManager, IOptions<SettingsMapModel> config) : base(config)
+        public AdminController(IUserService userManager, IOptions<SettingsMapModel> config,IMapper mapper) : base(config,mapper)
         {
             _userManager = userManager;
         }

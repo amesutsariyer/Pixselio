@@ -1012,7 +1012,7 @@ footer {
                 transition: transform 0.15s ease 0s;
                 -webkit-transform: scale3d(1, 1, 1);
                 transform: scale3d(1, 1, 1);
-             
+                object-fit: cover;
                 width: 100%;
                 height: 200px;
             }

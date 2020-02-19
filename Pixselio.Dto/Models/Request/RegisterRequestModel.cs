@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pixselio.Web.Models.Request
+
+namespace Pixselio.Dto.Models.Request
 {
     public class RegisterRequestModel
     {

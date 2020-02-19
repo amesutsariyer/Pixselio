@@ -8,6 +8,6 @@ namespace Pixselio.Business.Services
         PhotoDto GetPhotoById(int id);
         List<PhotoDto> GetPhotoByUserId(string createdUserName);
         string Add(PhotoDto dto); 
-        string Delete(int id); 
+        bool Delete(int id); 
     }
 }
